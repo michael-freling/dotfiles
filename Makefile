@@ -7,7 +7,7 @@ install:
 	curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
 
 	# git
-	ln -sfn ./.gitconfig $(HOME)/.gitconfig
+	ln -sfn $(shell pwd)/.gitconfig $(HOME)/.gitconfig
 
 	# emacs
-	ln -sf ./init.el $(HOME)/.emacs.d/
+	ln -sf $(shell pwd)/init.el $(HOME)/.emacs.d/

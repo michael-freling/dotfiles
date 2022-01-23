@@ -1,5 +1,4 @@
-install: install-apps
-	# fish
+install: install-apps setup # fish
 	sudo apt -y install fish curl
 	sudo chsh -s $(shell which fish)
 	mkdir -p $(HOME)/.config/fish
@@ -11,8 +10,15 @@ install: install-apps
 	ln -sfn $(shell pwd)/.gitconfig $(HOME)/.gitconfig
 
 	# emacs
-	mkdir $(HOME)/.emacs.d
+	mkdir -p $(HOME)/.emacs.d
 	ln -sf $(shell pwd)/init.el $(HOME)/.emacs.d/
+
+	# gh
+	curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+	echo "deb [arch=$(shell dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+	sudo apt update
+	sudo apt install gh
+
 
 install-apps:
 # 	sudo snap install google-chrome
@@ -21,4 +27,9 @@ install-apps:
 	sudo dpkg -i google-chrome-stable_current_amd64.deb	
 	sudo snap install vlc
 	sudo snap install --classic code
+
+setup:
+	# Set CapsLock key to Ctrl key
+	# https://opensource.com/article/21/5/remap-caps-lock-key-linux
+	dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:ctrl_modifier']"
 

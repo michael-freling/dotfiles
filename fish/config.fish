@@ -1,4 +1,4 @@
-
+fish_add_path $HOME/.anyenv/bin
 # Load anyenv automatically by adding
 # the following to ~/.config/fish/config.fish:
 

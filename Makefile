@@ -1,6 +1,6 @@
-install: install-apps setup # fish
+install: install-apps # setup # fish
 	sudo apt -y install fish curl
-	sudo chsh -s $(shell which fish)
+	# 	sudo chsh -s $(shell which fish)
 	mkdir -p $(HOME)/.config/fish
 	ln -sfn $(shell pwd)/fish/config.fish $(HOME)/.config/fish/
 	ln -sfn $(shell pwd)/fish/fish_plugins $(HOME)/.config/fish/
@@ -27,6 +27,7 @@ install: install-apps setup # fish
 install-apps:
 # 	sudo snap install google-chrome
 
+	sudo apt-add-repository ppa:fish-shell/release-3
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 	sudo dpkg -i google-chrome-stable_current_amd64.deb	
 	sudo snap install vlc

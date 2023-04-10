@@ -1,10 +1,12 @@
-install: install-apps # setup # fish
+install: # {install-apps # setup # fish
 	sudo apt -y install fish curl
 	# 	sudo chsh -s $(shell which fish)
 	mkdir -p $(HOME)/.config/fish
 	ln -sfn $(shell pwd)/fish/config.fish $(HOME)/.config/fish/
 	ln -sfn $(shell pwd)/fish/fish_plugins $(HOME)/.config/fish/
 	curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+	fisher update
+	
 	git clone https://github.com/anyenv/anyenv ~/.anyenv
 	~/.anyenv/bin/anyenv init
 	~/.anyenv/bin/anyenv install --init

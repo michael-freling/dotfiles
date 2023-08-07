@@ -1,5 +1,5 @@
 install: # {install-apps # setup # fish
-	sudo apt -y install fish curl
+	sudo apt -y update && sudo apt -y install fish curl fzf
 	# 	sudo chsh -s $(shell which fish)
 	mkdir -p $(HOME)/.config/fish
 	ln -sfn $(shell pwd)/fish/config.fish $(HOME)/.config/fish/

@@ -15,9 +15,8 @@ install: # {install-apps # setup # fish
 	# git
 	ln -sfn $(shell pwd)/.gitconfig $(HOME)/.gitconfig
 
-	# emacs
-	mkdir -p $(HOME)/.emacs.d
-	ln -sf $(shell pwd)/init.el $(HOME)/.emacs.d/
+	make install-google-cloud-sdk
+	make install-firebase-cli
 
 	# gh
 	curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
@@ -35,6 +34,18 @@ install-apps:
 	sudo snap install vlc
 	sudo snap install --classic code
 
+install-google-cloud-sdk:
+	sudo apt -y update
+	sudo apt -y install apt-transport-https ca-certificates gnupg curl sudo
+	echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+	curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+	sudo apt -y update && sudo apt -y install google-cloud-cli
+	gcloud init
+
+install-firebase-cli:
+	curl -sL https://firebase.tools | bash
+	firebase login
+
 setup:
 	# Set CapsLock key to Ctrl key
 	# https://opensource.com/article/21/5/remap-caps-lock-key-linux
@@ -42,4 +53,3 @@ setup:
 	# Auto hide dock
 	# https://askubuntu.com/questions/1005470/how-do-i-auto-hide-the-ubuntu-dock-using-gsettings-on-ubuntu-17-10-and-later
 	gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false
-

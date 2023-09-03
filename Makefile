@@ -5,24 +5,15 @@ install: # {install-apps # setup # fish
 	ln -sfn $(shell pwd)/fish/config.fish $(HOME)/.config/fish/
 	ln -sfn $(shell pwd)/fish/fish_plugins $(HOME)/.config/fish/
 	curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
-	fisher update
+	fish -c "fisher update"
 	
-	git clone https://github.com/anyenv/anyenv ~/.anyenv
-	~/.anyenv/bin/anyenv init
-	~/.anyenv/bin/anyenv install --init
-	~/.anyenv/bin/anyenv install nodenv
-
 	# git
 	ln -sfn $(shell pwd)/.gitconfig $(HOME)/.gitconfig
 
 	make install-google-cloud-sdk
 	make install-firebase-cli
-
-	# gh
-	curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-	echo "deb [arch=$(shell dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-	sudo apt update
-	sudo apt install gh
+	make install-anyenv
+	make install-gh
 
 
 install-apps:
@@ -33,6 +24,18 @@ install-apps:
 	sudo dpkg -i google-chrome-stable_current_amd64.deb	
 	sudo snap install vlc
 	sudo snap install --classic code
+
+install-gh:
+	curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+	echo "deb [arch=$(shell dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+	sudo apt update
+	sudo apt install gh
+
+install-anyenv:
+	git clone https://github.com/anyenv/anyenv ~/.anyenv
+	~/.anyenv/bin/anyenv init
+	~/.anyenv/bin/anyenv install --init
+	~/.anyenv/bin/anyenv install nodenv
 
 install-google-cloud-sdk:
 	sudo apt -y update

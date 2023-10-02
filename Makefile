@@ -10,6 +10,9 @@ install: # {install-apps # setup # fish
 	# git
 	ln -sfn $(shell pwd)/.gitconfig $(HOME)/.gitconfig
 
+	# tmux
+	ln -sfn $(shell pwd)/.tmux.conf $(HOME)/.tmux.conf
+
 	make install-google-cloud-sdk
 	make install-firebase-cli
 	make install-gh

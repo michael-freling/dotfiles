@@ -1,5 +1,5 @@
 install: # {install-apps # setup # fish
-	sudo apt -y update && sudo apt -y install fish curl fzf
+	sudo apt -y update && sudo apt -y install fish curl fzf jq
 	# 	sudo chsh -s $(shell which fish)
 	mkdir -p $(HOME)/.config/fish
 	ln -sfn $(shell pwd)/fish/config.fish $(HOME)/.config/fish/
@@ -12,9 +12,9 @@ install: # {install-apps # setup # fish
 
 	make install-google-cloud-sdk
 	make install-firebase-cli
-	make install-anyenv
 	make install-gh
-
+	make install-anyenv
+	make install-bitwarden-cli
 
 install-apps:
 # 	sudo snap install google-chrome
@@ -31,11 +31,17 @@ install-gh:
 	sudo apt update
 	sudo apt install gh
 
+install-bitwarden-cli:
+	# https://bitwarden.com/help/cli/
+	npm install -g @bitwarden/cli
+	npx bw login
+
 install-anyenv:
 	git clone https://github.com/anyenv/anyenv ~/.anyenv
 	~/.anyenv/bin/anyenv init
 	~/.anyenv/bin/anyenv install --init
 	~/.anyenv/bin/anyenv install nodenv
+	~/.anyenv/bin/anyenv install tfenv
 
 install-google-cloud-sdk:
 	sudo apt -y update
